@@ -27,6 +27,9 @@ class user:
         self.my_questions = []
         # Visible questions (from neighbors)
         self.vis_questions = []
+
+        self.upvotes_questions = 0
+        self.upvotes_answers = 0
     
     def step(self):
 
@@ -46,6 +49,7 @@ class user:
                         u = np.random.uniform()
                         if u < self.interact:
                             q.upvotes_answer += 1
+                            self.upvotes_answers += 1
 
                         # Change the satisfaction of the responder based on the percentage of upvotes on the answer
                         q.responder.satisfaction *= 2 * (q.upvotes_answer / len(q.responder.neighbors))
@@ -69,6 +73,7 @@ class user:
             u = np.random.uniform()
             if u < self.interact:
                 q.upvotes_question += 1
+                self.upvotes_questions += 1
 
             if q.responder is None:
                 # Determine if user will answer the question
@@ -82,6 +87,7 @@ class user:
                 u = np.random.uniform()
                 if u < self.interact:
                     q.upvotes_answer += 1
+                    self.upvotes_answers += 1
                 self.vis_questions.remove(q)
 
 
@@ -173,13 +179,26 @@ class model:
 
 if __name__ == '__main__':
 
-    test = model(10, 0.3)
-
+    n = 1000
+    test = model(n, 0.3)
+    """
     for user in test.users:
         ids = []
         for node in user.neighbors:
             ids.append(node.id)
         print(user.id, ids)
-
+    """
     test.run(10)
+
+    upvotes = []
+    for user in test.users:
+        upvotes.append(user.upvotes_questions + user.upvotes_answers)
+    
+    upvotes = np.sort(upvotes)
+    print(upvotes)
+
+    plt.figure()
+    plt.hist(upvotes, width=5, bins=100)
+    plt.show()
+
     print('finished')
