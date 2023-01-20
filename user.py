@@ -37,6 +37,16 @@ class user:
         self.n_questions_upvoted = 0
         self.n_answers_upvoted = 0
 
+    def ask_question(self):
+        """Generate a question."""
+        q = question(self.id, self.tag)
+        self.my_questions.append(q)
+
+        # Make the question visible for all people with the same tag
+        for id in self.system.tags[self.tag]:
+            if id != q.asker:
+                self.system.users[id].vis_questions.append(q)
+
 class question:
 
     def __init__(self, id, tag):
