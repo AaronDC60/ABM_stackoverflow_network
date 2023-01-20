@@ -75,6 +75,37 @@ class user:
                     self.system.users[id].vis_answers.append(a)
             self.n_questions_answered += 1
 
+    def upvote(self, interaction):
+        """
+        Check if question/answer is upvoted.
+
+        Parameters
+        ----------
+        interaction : .question or .answer
+            object of the class question or answer
+        """
+        # Minimum reputation for upvoting is 15
+        if self.reputation >= 15:
+            u = np.random.uniform()
+
+            # Higher probability if the question/answer has more upvotes
+            x = np.log(self.p_interact/(1-self.p_interact))
+            x += interaction.n_upvotes
+            p_upvote = 1 / (1 + np.exp(-x))
+
+            # Upvote question/answer
+            if u < p_upvote:
+                interaction.n_upvotes += 1
+                if type(interaction) == question:
+                    self.n_questions_upvoted += 1
+                    id = interaction.asker
+                else:
+                    self.n_answers_upvoted += 1
+                    id = interaction.responder
+            
+                # Increase the reputation
+                self.system.users[id].reputation += 10
+
 class question:
 
     def __init__(self, id, tag):
