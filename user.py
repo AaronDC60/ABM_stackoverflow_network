@@ -106,6 +106,26 @@ class user:
                 # Increase the reputation
                 self.system.users[id].reputation += 10
 
+    def eval(self):
+        """Evaluate user's questions and corresponding answers."""
+        for q in self.my_questions[::-1]:
+            q.age += 1
+
+            # Give every user the chance to upvote all the answers
+            if q.age == 2:                
+                if q.answers:
+                    # Increase the reputation of the user that gave the answer with the most upvotes
+                    max = q.answers[0]
+                    for a in q.answers:
+                        if a.n_upvotes > max.n_upvotes:
+                            max = a
+
+                    self.system.users[max.responder].reputation += 15
+                else:
+                    # Reduce probability to ask a question
+                    self.p_ask *= 0.8
+
+
 class question:
 
     def __init__(self, id, tag):
