@@ -46,6 +46,34 @@ class user:
         for id in self.system.tags[self.tag]:
             if id != q.asker:
                 self.system.users[id].vis_questions.append(q)
+        self.n_questions_asked += 1
+
+    def answer_question(self, q):
+        """
+        Generate an answer.
+
+        Parameters
+        ----------
+        q : .question
+            object of the class question
+        """
+        u = np.random.uniform()
+
+        # Lower probability if the question is already answered
+        x = np.log(self.p_answer/(1-self.p_answer))
+        x -= len(q.answers)
+        p_answer = 1 / (1 + np.exp(-x))
+
+        # Answer question
+        if u < p_answer:
+            a = answer(self.id, q.tag)
+            q.answers.append(a)
+
+            # Make the answer visible for all people with the same tag
+            for id in self.system.tags[q.tag]:
+                if id != a.responder:
+                    self.system.users[id].vis_answers.append(a)
+            self.n_questions_answered += 1
 
 class question:
 
