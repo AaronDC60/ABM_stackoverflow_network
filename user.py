@@ -36,3 +36,23 @@ class user:
 
         self.n_questions_upvoted = 0
         self.n_answers_upvoted = 0
+
+class question:
+
+    def __init__(self, id, tag):
+
+        self.asker = id
+        self.tag = tag
+        self.age = 0
+
+        self.n_upvotes = 0
+        self.answers = []
+
+class answer:
+
+    def __init__(self, id, tag):
+
+        self.responder = id
+        self.tag = tag
+
+        self.n_upvotes = 0
