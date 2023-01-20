@@ -125,6 +125,30 @@ class user:
                     # Reduce probability to ask a question
                     self.p_ask *= 0.8
 
+    def step(self):
+        """Timestep of a single user."""
+        # Evaluate previous questions
+        self.eval()
+
+        # Determine if user will ask a question
+        u = np.random.uniform()
+        if u < self.p_ask:
+            self.ask_question()
+
+        # Check if there are visible questions
+        for q in self.vis_questions:
+            # Upvote question?
+            self.upvote(q)
+            # Answer question?
+            self.answer_question(q)
+        # Remove questions from the visible list
+        self.vis_questions = []
+
+        for a in self.vis_answers:
+            # Upvote answer?
+            self.upvote(a)
+        # Remove answers from the visible list    
+        self.vis_answers = []
 
 class question:
 
