@@ -6,10 +6,10 @@ from scipy.stats import norm
 
 class user:
 
-    def __init__(self, model, i, tag):
+    def __init__(self, system, i, tag):
 
         # Model
-        self.system = model
+        self.system = system
 
         # ID
         self.id = i
@@ -30,7 +30,6 @@ class user:
         self.my_questions = []
 
         # Data storage
-
         self.n_questions_asked = 0
         self.n_questions_answered = 0
 
@@ -169,3 +168,4 @@ class answer:
         self.tag = tag
 
         self.n_upvotes = 0
+        
