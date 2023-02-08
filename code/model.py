@@ -41,14 +41,6 @@ class system:
         Single timestep of the model.
     run(t)
         Execute the model for a certain number of timesteps.
-    draw_normal(mu, sigma)
-        Draw probability from normal distribution.
-    draw_uniform()
-        Draw probability from uniform distribution.
-    draw_exponential(alpha)
-        Draw probability from exponential distribution.
-    calc_cdf(pdf)
-        Calculate the cummulative distribution function of a given pdf.
     """
 
     def __init__(self, n, tags, treshold=15, bias=12, distr=[[0.5, 0.25], [0.5, 0.25], [0.5, 0.25], [0.5, 0.25]]):
