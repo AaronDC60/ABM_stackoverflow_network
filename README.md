@@ -52,5 +52,4 @@ The output of the sensitivy analysis is written to csv and these files are store
 Inside this folder there are notebooks containing the code that produced the visualization of the SA
 
 * `lsa.ipynb`
-* `gsa.ipynb
-
+* `gsa.ipynb`
