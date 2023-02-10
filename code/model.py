@@ -8,7 +8,7 @@ import user as agent
 import utils
 
 
-class system:
+class network:
     """
     Framework of the model that represents the interaction network of Stack overflow.
 
@@ -107,7 +107,7 @@ class system:
 
         Returns
         -------
-        user : .user
+        new_user : .user
             new user
         """
         # Tag
@@ -115,7 +115,7 @@ class system:
         self.tags[tag].append(i)
 
         # User
-        user = agent.user(self, i, tag)
+        new_user = agent.user(self, i, tag)
 
         # Probabilities
         attributes = ['p_ask', 'p_answer', 'p_interact', 'p_active']
@@ -130,10 +130,10 @@ class system:
                 # Normal distribution
                 p = utils.draw_normal(param[0], param[1])
 
-            setattr(user, attributes[i], p)
-            setattr(user, attributes[i] + '_begin', p)
+            setattr(new_user, attributes[i], p)
+            setattr(new_user, attributes[i] + '_begin', p)
 
-        return user
+        return new_user
 
     def step(self):
         """Single timestep of the model."""
